@@ -4,6 +4,7 @@ import os
 from flask import Flask, render_template, request, jsonify
 import openai
 
+# Create a Flask web application instance
 app = Flask(__name__)
 
 # Set your OpenAI GPT-3 API key here
