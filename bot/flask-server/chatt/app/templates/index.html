@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot Example</title>
+</head>
+<body>
+    <h1>ChatGPT Chatbot</h1>
+    <div>
+        <input type="text" id="userInput">
+        <button onclick="sendMessage()">Submit</button>
+    </div>
+    <div id="chatlog"></div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            appendToChatLog("User: " + userInput);
+            document.getElementById("userInput").value = "";
+
+            fetch("/chatbot", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ "question": userInput }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                appendToChatLog("Bot: " + data.response);
+            });
+        }
+
+        function appendToChatLog(message) {
+            const chatLog = document.getElementById("chatlog");
+            chatLog.innerHTML += "<p>" + message + "</p>";
+        }
+    </script>
+</body>
+</html>
